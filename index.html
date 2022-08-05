@@ -1,95 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 
-<head>
-    <meta charset="utf-8">
-    <title>Hello World</title>
+<meta charset="utf-8">
+<title>Hello World</title>
 
-    <!-- Phaser -->
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
-</head>
-
-<body>
-    <script>
-        var config = {
-            type: Phaser.AUTO,
-            width: 800,
-            height: 600,
-            physics: {
-                default: 'arcade',
-                arcade: {
-                    gravity: {
-                        y: 2000
-                    }
-                }
-            },
-            scene: {
-                preload: preload,
-                create: create
-            }
-        };
-
-        var game = new Phaser.Game(config);
-
-        function preload() {
-            this.load.image('player', 'assets/test/player.png');
-        }
-
-        function create() {
-            var particles = this.add.particles('player');
-            var emitter = particles.createEmitter({
-                speed: 100,
-                scale: {
-                    start: 1,
-                    end: 0
-                },
-                blendMode: 'ADD'
-            });
-
-            var logo = this.physics.add.image(32, 32, 'player');
-
-            //logo.setVelocity(0, 200);
-            //logo.setBounce(1, 1);
-            logo.setCollideWorldBounds(true);
-            emitter.startFollow(logo);
-
-            // Control
-            var keys = this.input.keyboard.addKeys('W, S, A, D');
-
-            keys.W.on('down', function(event) {
-                if (logo.body.velocity.x == 300) {
-                    logo.body.velocity.x = 400;
-                } else if (logo.body.velocity.x == -300) {
-                    logo.body.velocity.x = -400;
-                }
-                logo.body.velocity.y = -500;
-            });
-            keys.S.on('down', function(event) {
-                logo.body.velocity.y = 500;
-            });
-
-            keys.A.on('down', function(event) {
-                logo.body.velocity.x = -300;
-            });
-            keys.A.on('up', function(event) {
-                if (!keys.D.isDown) {
-                    logo.body.velocity.x = 0;
-                } else {
-                    logo.body.velocity.x = 300;
-                }
-            });
-            keys.D.on('down', function(event) {
-                logo.body.velocity.x = 300;
-            });
-            keys.D.on('up', function(event) {
-                if (!keys.A.isDown) {
-                    logo.body.velocity.x = 0;
-                } else {
-                    logo.body.velocity.x = -300;
-                }
-            });
-        }
-    </script>
-</body>
+<!-- Phaser -->
+<script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+<script src="scene/stage_0.js"></script>
+<script src="config.js"></script>
+<link rel="stylesheet" href="main.css">
 
 </html>
