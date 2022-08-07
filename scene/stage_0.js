@@ -1,5 +1,4 @@
-let player;
-var zero;
+let zero;
 let cursor;
 
 class Stage_0 extends Phaser.Scene {
@@ -9,11 +8,12 @@ class Stage_0 extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('player', 'assets/test/player.png');
+        // this.load.image('player', 'assets/test/player.png');
         this.load.atlas('zero_stand', 'assets/char/zero/stand.png', 'assets/char/zero/stand.json');
         this.load.atlas('zero_run', 'assets/char/zero/run.png', 'assets/char/zero/run.json');
         this.load.atlas('zero_jump', 'assets/char/zero/jump.png', 'assets/char/zero/jump.json');
         this.load.atlas('zero_fall', 'assets/char/zero/fall.png', 'assets/char/zero/fall.json');
+        this.load.atlas('zero_dash', 'assets/char/zero/dash.png', 'assets/char/zero/dash.json');
     }
 
     create() {
@@ -65,20 +65,46 @@ class Stage_0 extends Phaser.Scene {
                 zeroPad: 2
             })
         });
+
+        this.anims.create({
+            key: 'zero_dash',
+            frameRate: 12,
+            frames: this.anims.generateFrameNames('zero_dash', {
+                prefix: 'dash_',
+                end: 5,
+                zeroPad: 2
+            })
+        });
     }
 
     update() {
         // Player Control
         if (cursor.right.isDown) {
             if (!cursor.left.isDown) {
-                zero.setVelocityX(300);
-                zero.flipX = false;
+                if (cursor.shift.isDown) {
+                    zero.setVelocityX(500);
+                } else {
+                    zero.setVelocityX(300);
+                }
+                zero.setFlipX(false);
             }
         } else if (cursor.left.isDown) {
-            zero.setVelocityX(-300);
-            zero.flipX = true;
+            if (cursor.shift.isDown) {
+                zero.setVelocityX(-500);
+            } else {
+                zero.setVelocityX(-300);
+            }
+            zero.setFlipX(true);
         } else {
-            zero.setVelocityX(0);
+            if (cursor.shift.isDown) {
+                if (zero.flipX) {
+                    zero.setVelocityX(-500);
+                } else {
+                    zero.setVelocityX(500);
+                }
+            } else {
+                zero.setVelocityX(0);
+            }
         }
 
         // Play Anims
@@ -86,7 +112,11 @@ class Stage_0 extends Phaser.Scene {
             if (zero.body.velocity.x == 0) {
                 zero.anims.play('zero_stand', true);
             } else {
-                zero.anims.play('zero_run', true);
+                if (zero.body.velocity.x == 500 || zero.body.velocity.x == -500) {
+                    zero.anims.play('zero_dash', true);
+                } else {
+                    zero.anims.play('zero_run', true);
+                }
             }
         } else {
             if (zero.body.velocity.y > 200) {
