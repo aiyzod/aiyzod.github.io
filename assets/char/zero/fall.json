@@ -1,0 +1,87 @@
+{
+  "frames": {
+    "fall_00": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 33,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 33,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 33,
+        "h": 48
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fall_01": {
+      "frame": {
+        "x": 39,
+        "y": 2,
+        "w": 33,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 33,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 33,
+        "h": 48
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "fall_02": {
+      "frame": {
+        "x": 76,
+        "y": 2,
+        "w": 33,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 33,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 33,
+        "h": 48
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "fall.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 111,
+      "h": 52
+    },
+    "scale": 1
+  }
+}

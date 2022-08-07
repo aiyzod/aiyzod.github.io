@@ -1,0 +1,159 @@
+{
+  "frames": {
+    "stand_00": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 34,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 34,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 34,
+        "h": 41
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "stand_01": {
+      "frame": {
+        "x": 40,
+        "y": 2,
+        "w": 34,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 34,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 34,
+        "h": 41
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "stand_02": {
+      "frame": {
+        "x": 78,
+        "y": 2,
+        "w": 34,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 34,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 34,
+        "h": 41
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "stand_03": {
+      "frame": {
+        "x": 116,
+        "y": 2,
+        "w": 34,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 34,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 34,
+        "h": 41
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "stand_04": {
+      "frame": {
+        "x": 154,
+        "y": 2,
+        "w": 34,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 34,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 34,
+        "h": 41
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "stand_05": {
+      "frame": {
+        "x": 192,
+        "y": 2,
+        "w": 34,
+        "h": 41
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 34,
+        "h": 41
+      },
+      "sourceSize": {
+        "w": 34,
+        "h": 41
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "stand.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 228,
+      "h": 45
+    },
+    "scale": 1
+  }
+}

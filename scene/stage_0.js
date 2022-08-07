@@ -1,45 +1,108 @@
 let player;
+var zero;
 let cursor;
 
 class Stage_0 extends Phaser.Scene {
 
-    constructor () {
+    constructor() {
         super('Stage_0');
     }
 
-    preload () {
+    preload() {
         this.load.image('player', 'assets/test/player.png');
+        this.load.atlas('zero_stand', 'assets/char/zero/stand.png', 'assets/char/zero/stand.json');
+        this.load.atlas('zero_run', 'assets/char/zero/run.png', 'assets/char/zero/run.json');
+        this.load.atlas('zero_jump', 'assets/char/zero/jump.png', 'assets/char/zero/jump.json');
+        this.load.atlas('zero_fall', 'assets/char/zero/fall.png', 'assets/char/zero/fall.json');
     }
 
-    create () {
+    create() {
         cursor = this.input.keyboard.createCursorKeys();
 
-        player = this.physics.add.image(32, 32, 'player');
-        player.setCollideWorldBounds(true);
-        // player.setGravityY(2000);
+        zero = this.physics.add.sprite(0, 720, 'zero_stand');
+        zero.setCollideWorldBounds(true);
+        // zero.setGravityY(2000);
+
+        this.anims.create({
+            key: 'zero_stand',
+            frameRate: 7,
+            repeat: -1,
+            frames: this.anims.generateFrameNames('zero_stand', {
+                prefix: 'stand_',
+                end: 5,
+                zeroPad: 2
+            })
+        });
+
+        this.anims.create({
+            key: 'zero_run',
+            frameRate: 13,
+            repeat: -1,
+            frames: this.anims.generateFrameNames('zero_run', {
+                prefix: 'run_',
+                end: 10,
+                zeroPad: 2
+            })
+        });
+
+        this.anims.create({
+            key: 'zero_jump',
+            frameRate: 16,
+            frames: this.anims.generateFrameNames('zero_jump', {
+                prefix: 'jump_',
+                end: 5,
+                zeroPad: 2
+            })
+        });
+
+        this.anims.create({
+            key: 'zero_fall',
+            frameRate: 10,
+            repeat: -1,
+            frames: this.anims.generateFrameNames('zero_fall', {
+                prefix: 'fall_',
+                end: 2,
+                zeroPad: 2
+            })
+        });
     }
 
-    update () {
+    update() {
         // Player Control
-        // 左右移動
         if (cursor.right.isDown) {
-            player.setVelocityX(300);
-        }
-        else if (cursor.left.isDown) {
-            player.setVelocityX(-300);
-        }
-        else {
-            player.setVelocityX(0);
-        }
-
-        // 跳躍
-        if (cursor.up.isDown && player.body.onFloor()) {
-            player.setVelocityY(-600);
+            if (!cursor.left.isDown) {
+                zero.setVelocityX(300);
+                zero.flipX = false;
+            }
+        } else if (cursor.left.isDown) {
+            zero.setVelocityX(-300);
+            zero.flipX = true;
+        } else {
+            zero.setVelocityX(0);
         }
 
-        // 快速落地
-        if (cursor.down.isDown && cursor.up.isUp && !player.body.onFloor()) {
-            player.setVelocityY(500);
+        // Play Anims
+        if (zero.body.onFloor()) {
+            if (zero.body.velocity.x == 0) {
+                zero.anims.play('zero_stand', true);
+            } else {
+                zero.anims.play('zero_run', true);
+            }
+        } else {
+            if (zero.body.velocity.y > 200) {
+                zero.anims.play('zero_fall', true);
+            }
+        }
+
+        // Jump
+        if (cursor.up.isDown && zero.body.onFloor()) {
+            zero.setVelocityY(-600);
+            zero.anims.play('zero_jump', true);
+        }
+
+        // Land
+        if (cursor.down.isDown && cursor.up.isUp && !zero.body.onFloor()) {
+            zero.setVelocityY(500);
         }
     }
 }

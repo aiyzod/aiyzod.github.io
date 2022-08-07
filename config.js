@@ -9,7 +9,7 @@ let config = {
             gravity: {
                 y: 2000
             },
-            debug: true
+            // debug: true
         }
     },
     audio: {
