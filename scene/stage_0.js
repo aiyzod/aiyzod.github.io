@@ -2,6 +2,10 @@ let zero;
 let cursor;
 let emitter;
 let particles;
+const speed_run = 300;
+const speed_dash = 500;
+const speed_jump = -600;
+const speed_fall = 500;
 
 class Stage_0 extends Phaser.Scene {
 
@@ -21,13 +25,10 @@ class Stage_0 extends Phaser.Scene {
     create() {
         cursor = this.input.keyboard.createCursorKeys();
 
-        zero = this.physics.add.sprite(0, 720, 'zero_stand');
-        zero.setCollideWorldBounds(true);
-        zero.setGravityY(2000);
-
         // Afterimage Dash Effect
         particles = this.add.particles('zero_dash');
         emitter = particles.createEmitter({
+            frame: 'dash_03',
             on: false,
             speed: 0,
             lifespan: 77,
@@ -39,11 +40,18 @@ class Stage_0 extends Phaser.Scene {
                 }
             }
         });
+
+        zero = this.physics.add.sprite(0, 720, 'zero_stand');
+        zero.setCollideWorldBounds(true);
+        zero.setGravityY(2000);
+
         emitter.startFollow(zero);
+        // emitter.setFrame('dash_02');
 
         this.anims.create({
             key: 'zero_stand',
             frameRate: 7,
+            frequency: 20,
             repeat: -1,
             frames: this.anims.generateFrameNames('zero_stand', {
                 prefix: 'stand_',
@@ -99,17 +107,21 @@ class Stage_0 extends Phaser.Scene {
         // Player Control
         emitter.on = cursor.shift.isUp ? false : true;
 
+        // Wall Jump & Wall Slide
+        if (zero.body.onWall() && !zero.body.onFloor() && zero.body.velocity.y > 0) {
+            zero.setVelocityY(cursor.up.isDown ? speed_jump : 100);
+        }
         if (cursor.right.isDown) {
             if (!cursor.left.isDown) {
                 zero.setFlipX(false);
-                zero.setVelocityX(cursor.shift.isDown ? 500 : 300);
+                zero.setVelocityX(cursor.shift.isDown ? speed_dash : speed_run);
             }
         } else if (cursor.left.isDown) {
             zero.setFlipX(true);
-            zero.setVelocityX(cursor.shift.isDown ? -500 : -300);
+            zero.setVelocityX(cursor.shift.isDown ? speed_dash * -1 : speed_run * -1);
         } else {
             if (cursor.shift.isDown) {
-                zero.setVelocityX(zero.flipX ? -500 : 500);
+                zero.setVelocityX(zero.flipX ? speed_dash * -1 : speed_dash);
             } else {
                 zero.setVelocityX(0);
             }
@@ -117,12 +129,12 @@ class Stage_0 extends Phaser.Scene {
 
         // Jump
         if (cursor.up.isDown && zero.body.onFloor()) {
-            zero.setVelocityY(-600);
+            zero.setVelocityY(speed_jump);
         }
 
         /* Land
         if (cursor.down.isDown && cursor.up.isUp && !zero.body.onFloor()) {
-            zero.setVelocityY(500);
+            zero.setVelocityY(speed_fall);
         } */
 
         // Play Anims
@@ -132,7 +144,7 @@ class Stage_0 extends Phaser.Scene {
             } else if (zero.body.velocity.x === 0) {
                 zero.anims.play('zero_stand', true);
             } else {
-                if (Math.abs(zero.body.velocity.x) === 500) {
+                if (Math.abs(zero.body.velocity.x) === speed_dash) {
                     zero.anims.play('zero_dash', true);
                 } else {
                     zero.anims.play('zero_run', true);
