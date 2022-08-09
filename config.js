@@ -1,15 +1,15 @@
 let config = {
     type: Phaser.AUTO,
-    width: 1280,
-    height: 720,
-    backgroundColor: '#EEEEEE',
+    width: 640,
+    height: 480,
+    backgroundColor: '#222222',
     physics: {
         default: 'arcade',
         arcade: {
+            // debug: true,
             gravity: {
                 y: 0
             }
-            // debug: true
         }
     },
     audio: {

@@ -31,9 +31,10 @@ class Stage_0 extends Phaser.Scene {
             frame: 'dash_03',
             on: false,
             speed: 0,
-            lifespan: 77,
+            lifespan: 30,
+            frequency: 15,
             tint: [0xf08080],
-            blendMode: 'COPY',
+            blendMode: 'ADD',
             scaleX: {
                 onEmit: function() {
                     return zero.flipX ? -1 : 1;
@@ -51,7 +52,6 @@ class Stage_0 extends Phaser.Scene {
         this.anims.create({
             key: 'zero_stand',
             frameRate: 7,
-            frequency: 20,
             repeat: -1,
             frames: this.anims.generateFrameNames('zero_stand', {
                 prefix: 'stand_',
@@ -97,7 +97,7 @@ class Stage_0 extends Phaser.Scene {
             frameRate: 12,
             frames: this.anims.generateFrameNames('zero_dash', {
                 prefix: 'dash_',
-                end: 5,
+                end: 6,
                 zeroPad: 2
             })
         });
@@ -105,22 +105,36 @@ class Stage_0 extends Phaser.Scene {
 
     update() {
         // Player Control
-        emitter.on = cursor.shift.isUp ? false : true;
+
+        // Dash
+        if (cursor.shift.isDown) {
+            if (cursor.shift.getDuration() > 520 && zero.body.onFloor()) {
+                emitter.on = false;
+            } else {
+                emitter.on = true
+            }
+        } else {
+            emitter.on = false;
+        }
 
         // Wall Jump & Wall Slide
-        if (zero.body.onWall() && !zero.body.onFloor() && zero.body.velocity.y > 0) {
-            zero.setVelocityY(cursor.up.isDown ? speed_jump : 100);
+        if (zero.body.onWall() && !zero.body.onFloor()) {
+            if (zero.body.velocity.y > 0) {
+                zero.setVelocityY(cursor.up.isDown ? speed_jump : 100);
+            }
+            emitter.on = false;
         }
+
         if (cursor.right.isDown) {
             if (!cursor.left.isDown) {
                 zero.setFlipX(false);
-                zero.setVelocityX(cursor.shift.isDown ? speed_dash : speed_run);
+                zero.setVelocityX(emitter.on ? speed_dash : speed_run);
             }
         } else if (cursor.left.isDown) {
             zero.setFlipX(true);
-            zero.setVelocityX(cursor.shift.isDown ? speed_dash * -1 : speed_run * -1);
+            zero.setVelocityX(emitter.on ? speed_dash * -1 : speed_run * -1);
         } else {
-            if (cursor.shift.isDown) {
+            if (emitter.on) {
                 zero.setVelocityX(zero.flipX ? speed_dash * -1 : speed_dash);
             } else {
                 zero.setVelocityX(0);
