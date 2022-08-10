@@ -117,14 +117,6 @@ class Stage_0 extends Phaser.Scene {
             emitter.on = false;
         }
 
-        // Wall Jump & Wall Slide
-        if (zero.body.onWall() && !zero.body.onFloor()) {
-            if (zero.body.velocity.y > 0) {
-                zero.setVelocityY(cursor.up.isDown ? speed_jump : 100);
-            }
-            emitter.on = false;
-        }
-
         if (cursor.right.isDown) {
             if (!cursor.left.isDown) {
                 zero.setFlipX(false);
@@ -139,6 +131,14 @@ class Stage_0 extends Phaser.Scene {
             } else {
                 zero.setVelocityX(0);
             }
+        }
+
+        // Wall Jump & Wall Slide
+        if (zero.body.onWall() && !zero.body.onFloor()) {
+            if (zero.body.velocity.y > 0) {
+                zero.setVelocityY(cursor.up.isDown ? speed_jump : 100);
+            }
+            emitter.on = false;
         }
 
         // Jump
